@@ -1,0 +1,1149 @@
+<!DOCTYPE html><html lang="en"><head>
+<title> DOMJudge（6.0.3）源码文件结构分析</title>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="()">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/svg-with-js.css" crossorigin="anonymous">
+<style type="text/css">
+body h1,p{line-height:1.6}.xiaoshujiang_pre,pre{word-wrap:break-word;word-break:break-word;tab-size:4;white-space:pre-wrap}.tag.label,.xsj_mindmap_caption,a.attachment,kbd{display:inline-block}body,kbd{color:#2f2f2f}img,kbd{vertical-align:middle}body{font-family:'Helvetica Neue',Helvetica,Tahoma,Arial,'Hiragino Sans GB',STHeiti,"Microsoft YaHei","微软雅黑",'WenQuanYi Micro Hei',STXihei,"华文细黑",Heiti,"黑体",SimSun,"宋体",Song,sans-serif;font-size:16px;line-height:1.33;font-weight:100;word-wrap:break-word;word-break:break-word;letter-spacing:0;word-spacing:.25em}a:focus{outline:#333 dotted thin;outline:-webkit-focus-ring-color auto 5px;outline-offset:-2px}a:active,a:hover{outline:0}a{color:#08c;text-decoration:none}a:hover{color:#005580;text-decoration:underline}h1,h2,h3,h4,h5,h6{margin:1em 0 .6em;font-family:inherit;font-weight:500;line-height:2.35rem;color:inherit;text-rendering:optimizelegibility}.mermaid_svg,.xiaoshujiang_pre,pre{font-family:monospace}.table th,.tag.label,a.attachment .filename,dt,strong{font-weight:700}h1{font-size:3.4rem}h2{font-size:3rem}h3{font-size:2.45rem}h4{font-size:2.1rem}h5{font-size:1.9rem}h6{font-size:1.5rem}body h2,body h3{line-height:1.1}.xsj_hr{margin:20px 0;border:0;border-top:1px dashed #2f2f2f;border-left:90px solid transparent;border-right:90px solid transparent}address,dl{margin-bottom:20px}blockquote p,ol ol,ol ul,ul ol,ul ul{margin-bottom:0}p{margin:0 0 1.1em}pre{line-height:initial!important}kbd{padding:3px 5px;font-size:11px;line-height:10px;background:#fcfcfc;border:1px solid #2f2f2f;border-bottom-color:#2f2f2f;border-radius:3px;box-shadow:inset 0 -1px 0 #2f2f2f}address{display:block;font-style:normal;line-height:20px}img{height:auto;max-width:100%;border:0}table{max-width:100%;background:0 0;border-collapse:collapse;border-spacing:0;word-break:initial;border:1px solid rgba(34,36,38,.15)}small{font-size:85%}em{font-style:italic}cite,em.cjk_emphasis{font-style:normal}ol,ul{padding:0;margin:0 0 10px 35px}dd,dt{line-height:20px}dd{margin-left:10px}body dd,body dt{line-height:1.35em}abbr[data-original-title],abbr[title]{cursor:help;border-bottom:1px dotted #999}blockquote{padding:15px 20px;margin:0 0 20px;border-left:10px solid rgba(153,153,153,.3);background:rgba(204,204,204,.4)}blockquote p{font-size:16px;font-weight:300;line-height:25px}blockquote small{display:block;line-height:20px;color:#999}blockquote small:before{content:'\2014 \00A0'}blockquote footer{margin:1em 0;font-style:italic}blockquote footer cite{margin:0 1em}code{background:rgba(214,219,223,.28);color:#2C3E50;border-radius:4px;padding:2px 4px}body code{border:0;border-radius:4px;font-size:90%}text{font-size:14px}h1.story_title{margin:.7em 0}.story_tags{margin:0 0 1.2em}.tag.label{vertical-align:baseline;line-height:1;margin:.125em;background:#ebeeef;border-color:#ebeeef;padding:.6em .8em;color:#5e6060;text-transform:none;border-radius:.2857rem;box-sizing:border-box;font-size:12px}.table{width:100%;margin-bottom:20px;margin-right:auto;margin-left:auto}.table td,.table th{padding:8px;line-height:20px;text-align:left;vertical-align:top;border-top:1px solid #ddd}.table thead th{vertical-align:bottom}.table caption+thead tr:first-child td,.table caption+thead tr:first-child th,.table colgroup+thead tr:first-child td,.table colgroup+thead tr:first-child th,.table thead:first-child tr:first-child td,.table thead:first-child tr:first-child th{border-top:0}.table tbody+tbody{border-top:2px solid #ddd}.table .table{background:#fff}.table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th{background:#f9f9f9}.table-celled.table tr td,.table-celled.table tr th{border-left:1px solid rgba(34,36,38,.1)}.table-celled.table tr td:first-child,.table-celled.table tr th:first-child{border-left:none}.mindmap_container{text-align:center}.xsj_mindmap_caption{border-bottom:1px solid #d9d9d9;color:#999;padding:10px}.hljs,.hljs *{overflow:visible!important;word-spacing:initial}body .xiaoshujiang_code{border:0;border-radius:4px;font-size:90%}.xiaoshujiang_code ol{margin-bottom:0}.xiaoshujiang_pre{line-height:initial!important}.xiaoshujiang_code_container pre{margin:0}.xiaoshujiang_code_container.xiaoshujiang_code_chunk{box-shadow:0 0 0 1px #A3C293 inset,0 0 0 0 transparent;margin:1em 0;padding:1em}.xiaoshujiang_code_container.xiaoshujiang_code_chunk_hide_code{box-shadow:initial;padding:initial initial 2em}.xiaoshujiang_code_container .out_put{box-shadow:0 0 0 1px #A3C293 inset,0 0 0 0 transparent;margin:1em 0;background:#FCFFF5;padding:1em}.xiaoshujiang_code_container .out_put_error{background:#FFF6F6;color:#9F3A38;margin:1em 0;box-shadow:0 0 0 1px #E0B4B4 inset,0 0 0 0 transparent;padding:1em}.xiaoshujiang_code.hljs.code_linenums,code.hljs.code_linenums{position:relative}.ol_linenums{padding:0;margin-left:2em;border-left:1px solid #e0e0e0}.li_linenum{position:relative;padding-left:.5em;list-style:none;counter-increment:lines 1}.li_linenum.li_list_style{list-style:inherit;margin-left:5px}.li_linenum:before,.li_linenum_before_span{content:counter(lines,decimal);position:absolute;left:-2.5em;text-align:center;width:2.5em;vertical-align:top}.li_linenum_before_span_hide{display:none}.xiaoshujiang_code_container{margin:1em 0;position:relative;padding-bottom:2em}.xiaoshujiang_code_title_container{font-size:70%;opacity:.5}.xiaoshujiang_code_title_container>.xiaoshujiang_code_infos{float:right}.mark{border:0;background:rgba(221,243,231,.4);color:#29754d;padding:2px 4px}.line_mark{background:rgba(210,174,174,.3)}.li_linenum.line_mark:before,.line_mark .li_linenum_before_span{background:rgba(210,118,118,.6)}.xiaoshujiang_code .mark,code .mark{border-radius:0;font-size:initial;padding:initial;background:rgba(160,234,194,.7)}a.attachment{background:#ecf0f3;border:1px solid #bec6cb;padding:5px;margin:2px;min-width:250px}a.attachment i.fa{font-size:3em;float:left;margin-right:.2em}a.attachment .filename{vertical-align:top;text-align:left}.flow-chart,.mermaid,.plot,.plot-image,.sequence-diagram,.story_image_container,.story_remote_resource_block,.video_container{text-align:center}a.attachment .filesize{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;opacity:.6;font-size:80%;white-space:nowrap}.story_image_container>.story_image{display:inline-block;position:relative;max-width:100%}.story_image_caption{border-bottom:1px solid #d9d9d9;display:inline-block;color:#999;padding:10px}.story_image_blank_caption{border-bottom:0}.story_image>img{border-radius:.3125em;box-shadow:0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08)}.story_inline_image{display:inline-block}.story_inline_image>img{vertical-align:bottom}.task-list-item{list-style:none}.task-list-item.li_list_style{list-style:inherit}.task-list-item>input{margin:0 0 0 -20px}.video_container{width:100%;display:table;position:relative;padding-bottom:56.25%!important}.video_container iframe{width:100%;height:100%;position:absolute;top:0;left:0;z-index:1;vertical-align:middle}.slideshare_container .inner{position:relative;width:100%}.slideshare_container .inner iframe{width:100%;height:100%;position:absolute;top:0;bottom:0;left:0;right:0}.toc ul{list-style-type:none}em.cjk_emphasis{font-family:Georgia,"Times New Roman",Times,"楷体","AR PL UKai CN",NSimSun,"Songti SC",SimSun,serif!important}.plot,.plot-image{min-height:200px;min-width:200px}.story_align_left,.story_align_left .story_image_container{text-align:left}.story_align_right,.story_align_right .story_image_container{text-align:right}.story_align_center,.story_align_center .story_image_container{text-align:center}.story_align_justify,.story_align_justify .story_image_container{text-align:justify}.mathjax-container{text-align:center}div.mathjax{max-width:600px;margin:0 auto;font-size:14px}@media print{body{font-size:18px;word-wrap:break-word;word-break:break-word;background:initial;font-kerning:normal;text-rendering:geometricPrecision}.xiaoshujiang_element.xsj_anchor{position:absolute}.story_image_container,tr{page-break-inside:avoid}.xsj_underline{page-break-after:always;visibility:hidden}}
+/*
+
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #fdf6e3;
+  color: #657b83;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #93a1a1;
+}
+
+/* Solarized Green */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+  color: #859900;
+}
+
+/* Solarized Cyan */
+.hljs-number,
+.hljs-string,
+.hljs-meta .hljs-meta-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp {
+  color: #2aa198;
+}
+
+/* Solarized Blue */
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #268bd2;
+}
+
+/* Solarized Yellow */
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: #b58900;
+}
+
+/* Solarized Orange */
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-link {
+  color: #cb4b16;
+}
+
+/* Solarized Red */
+.hljs-built_in,
+.hljs-deletion {
+  color: #dc322f;
+}
+
+.hljs-formula {
+  background: #eee8d5;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/**
+ * Treeview syntax highlighting based on highlight.js
+ * Copyright (c) 2014-2015, Asciidocfx Team, (MIT Licensed)
+ * https://github.com/asciidocfx/highlight-treeview.js
+ */
+.language-treeview.hljs{
+  position: relative;
+}
+.hljs-folder,
+.hljs-hiddenfile,
+.hljs-file {
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    height: 16px;
+}
+.hljs-folder:before,
+.hljs-file:before,
+.hljs-hiddenfile:before {
+    top: 0;
+    content: '';
+    width: 14px;
+    height: 12px;
+    margin-top: 0px;
+    margin-right: 3px;
+    position: relative;
+    display: inline-block;
+    background-size: 14px;
+    background-repeat: no-repeat;
+}
+.hljs-file:before,
+.hljs-hiddenfile:before {
+    height: 14px;
+    margin-left: 1px;
+}
+.hljs-hiddenfile {
+    opacity: 0.6;
+}
+.hljs-file.photo:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c5";
+}
+.hljs-file.plain:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f016";
+}
+.hljs-file.source:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c9";
+}
+.hljs-file.archive:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c6";
+}
+.hljs-file.audio:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c7";
+}
+.hljs-file.video:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c8";
+}
+.hljs-file.pdf:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c1";
+}
+.hljs-file.xls:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c3";
+}
+.hljs-file.doc:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c2";
+}
+.hljs-file.ppt:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f1c4";
+}
+.hljs-folder:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f114";
+}
+.hljs-hiddenfile:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f016";
+}
+.hljs-tvline {
+    margin-left: 6px;
+    position: absolute;
+    text-indent: -99em;
+    padding-bottom: 8px;
+    vertical-align: top;
+    display: inline-block;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: rgb(94, 144, 117);
+}
+.hljs-folder-branch {
+    width: 8px;
+    height: 8px;
+    margin-top: -1px;
+    margin-left: 6px;
+    text-indent: -99em;
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(94, 144, 117);
+}
+.hljs-folder-branch.win {
+    width: 14px;
+    margin-right: 2px;
+}
+.hljs-folder-last-branch {
+    height: 7px;
+    width: 7px;
+    margin-left: 6px;
+    text-indent: -99em;
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(94, 144, 117);
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: rgb(94, 144, 117);
+}
+.hljs-folder-last-branch.win {
+    width: 13px;
+    margin-right: 2px;
+}
+
+
+/**
+ * Treeview syntax highlighting based on highlight.js
+ */
+
+/*wavedrom start*/
+
+.wavedrom_svg text, .wavedrom_svg_defs text {
+    font-size:11pt;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    font-stretch:normal;
+    text-align:center;
+    fill-opacity:1;
+    font-family:Helvetica
+}
+.wavedrom_svg .muted, .wavedrom_svg_defs .muted {
+    fill:#aaa
+}
+.wavedrom_svg .warning, .wavedrom_svg_defs .warning {
+    fill:#f6b900
+}
+.wavedrom_svg .error, .wavedrom_svg_defs .error {
+    fill:#f60000
+}
+.wavedrom_svg .info, .wavedrom_svg_defs .info {
+    fill:#0041c4
+}
+.wavedrom_svg .success, .wavedrom_svg_defs .success {
+    fill:#00ab00
+}
+.wavedrom_svg .h1, .wavedrom_svg_defs .h1 {
+    font-size:33pt;
+    font-weight:bold
+}
+.wavedrom_svg .h2, .wavedrom_svg_defs .h2 {
+    font-size:27pt;
+    font-weight:bold
+}
+.wavedrom_svg .h3, .wavedrom_svg_defs .h3 {
+    font-size:20pt;
+    font-weight:bold
+}
+.wavedrom_svg .h4, .wavedrom_svg_defs .h4 {
+    font-size:14pt;
+    font-weight:bold
+}
+.wavedrom_svg .h5, .wavedrom_svg_defs .h5 {
+    font-size:11pt;
+    font-weight:bold
+}
+.wavedrom_svg .h6, .wavedrom_svg_defs .h6 {
+    font-size:8pt;
+    font-weight:bold
+}
+.wavedrom_svg_defs .s1 {
+    fill:none;
+    stroke:#000;
+    stroke-width:1;
+    stroke-linecap:round;
+    stroke-linejoin:miter;
+    stroke-miterlimit:4;
+    stroke-opacity:1;
+    stroke-dasharray:none
+}
+.wavedrom_svg_defs .s2 {
+    fill:none;
+    stroke:#000;
+    stroke-width:0.5;
+    stroke-linecap:round;
+    stroke-linejoin:miter;
+    stroke-miterlimit:4;
+    stroke-opacity:1;
+    stroke-dasharray:none
+}
+.wavedrom_svg_defs .s3 {
+    color:#000;
+    fill:none;
+    stroke:#000;
+    stroke-width:1;
+    stroke-linecap:round;
+    stroke-linejoin:miter;
+    stroke-miterlimit:4;
+    stroke-opacity:1;
+    stroke-dasharray:1,3;
+    stroke-dashoffset:0;
+    marker:none;
+    visibility:visible;
+    display:inline;
+    overflow:visible;
+    enable-background:accumulate
+}
+.wavedrom_svg_defs .s4 {
+    color:#000;
+    fill:none;
+    stroke:#000;
+    stroke-width:1;
+    stroke-linecap:round;
+    stroke-linejoin:miter;
+    stroke-miterlimit:4;
+    stroke-opacity:1;
+    stroke-dasharray:none;
+    stroke-dashoffset:0;
+    marker:none;
+    visibility:visible;
+    display:inline;
+    overflow:visible
+}
+.wavedrom_svg_defs .s5 {
+    fill:#fff;
+    stroke:none
+}
+.wavedrom_svg_defs .s6 {
+    color:#000;
+    fill:#ffffb4;
+    fill-opacity:1;
+    fill-rule:nonzero;
+    stroke:none;
+    stroke-width:1px;
+    marker:none;
+    visibility:visible;
+    display:inline;
+    overflow:visible;
+    enable-background:accumulate
+}
+.wavedrom_svg_defs .s7 {
+    color:#000;
+    fill:#ffe0b9;
+    fill-opacity:1;
+    fill-rule:nonzero;
+    stroke:none;
+    stroke-width:1px;
+    marker:none;
+    visibility:visible;
+    display:inline;
+    overflow:visible;
+    enable-background:accumulate
+}
+.wavedrom_svg_defs .s8 {
+    color:#000;
+    fill:#b9e0ff;
+    fill-opacity:1;
+    fill-rule:nonzero;
+    stroke:none;
+    stroke-width:1px;
+    marker:none;
+    visibility:visible;
+    display:inline;
+    overflow:visible;
+    enable-background:accumulate
+}
+.wavedrom_svg_defs .s9 {
+    fill:#000;
+    fill-opacity:1;
+    stroke:none
+}
+.wavedrom_svg_defs .s10 {
+    color:#000;
+    fill:#fff;
+    fill-opacity:1;
+    fill-rule:nonzero;
+    stroke:none;
+    stroke-width:1px;
+    marker:none;
+    visibility:visible;
+    display:inline;
+    overflow:visible;
+    enable-background:accumulate
+}
+.wavedrom_svg_defs .s11 {
+    fill:#0041c4;
+    fill-opacity:1;
+    stroke:none
+}
+.wavedrom_svg_defs .s12 {
+    fill:none;
+    stroke:#0041c4;
+    stroke-width:1;
+    stroke-linecap:round;
+    stroke-linejoin:miter;
+    stroke-miterlimit:4;
+    stroke-opacity:1;
+    stroke-dasharray:none
+}
+
+/*wavedrom stop*/
+
+
+/* fontawesome */
+
+/*!
+ * Font Awesome Free 5.7.1 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+svg:not(:root).svg-inline--fa {
+  overflow: visible; }
+
+.svg-inline--fa {
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -.125em; }
+  .svg-inline--fa.fa-lg {
+    vertical-align: -.225em; }
+  .svg-inline--fa.fa-w-1 {
+    width: 0.0625em; }
+  .svg-inline--fa.fa-w-2 {
+    width: 0.125em; }
+  .svg-inline--fa.fa-w-3 {
+    width: 0.1875em; }
+  .svg-inline--fa.fa-w-4 {
+    width: 0.25em; }
+  .svg-inline--fa.fa-w-5 {
+    width: 0.3125em; }
+  .svg-inline--fa.fa-w-6 {
+    width: 0.375em; }
+  .svg-inline--fa.fa-w-7 {
+    width: 0.4375em; }
+  .svg-inline--fa.fa-w-8 {
+    width: 0.5em; }
+  .svg-inline--fa.fa-w-9 {
+    width: 0.5625em; }
+  .svg-inline--fa.fa-w-10 {
+    width: 0.625em; }
+  .svg-inline--fa.fa-w-11 {
+    width: 0.6875em; }
+  .svg-inline--fa.fa-w-12 {
+    width: 0.75em; }
+  .svg-inline--fa.fa-w-13 {
+    width: 0.8125em; }
+  .svg-inline--fa.fa-w-14 {
+    width: 0.875em; }
+  .svg-inline--fa.fa-w-15 {
+    width: 0.9375em; }
+  .svg-inline--fa.fa-w-16 {
+    width: 1em; }
+  .svg-inline--fa.fa-w-17 {
+    width: 1.0625em; }
+  .svg-inline--fa.fa-w-18 {
+    width: 1.125em; }
+  .svg-inline--fa.fa-w-19 {
+    width: 1.1875em; }
+  .svg-inline--fa.fa-w-20 {
+    width: 1.25em; }
+  .svg-inline--fa.fa-pull-left {
+    margin-right: .3em;
+    width: auto; }
+  .svg-inline--fa.fa-pull-right {
+    margin-left: .3em;
+    width: auto; }
+  .svg-inline--fa.fa-border {
+    height: 1.5em; }
+  .svg-inline--fa.fa-li {
+    width: 2em; }
+  .svg-inline--fa.fa-fw {
+    width: 1.25em; }
+
+.fa-layers svg.svg-inline--fa {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+.fa-layers {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  text-align: center;
+  vertical-align: -.125em;
+  width: 1em; }
+  .fa-layers svg.svg-inline--fa {
+    -webkit-transform-origin: center center;
+            transform-origin: center center; }
+
+.fa-layers-text, .fa-layers-counter {
+  display: inline-block;
+  position: absolute;
+  text-align: center; }
+
+.fa-layers-text {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transform-origin: center center;
+          transform-origin: center center; }
+
+.fa-layers-counter {
+  background-color: #ff253a;
+  border-radius: 1em;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #fff;
+  height: 1.5em;
+  line-height: 1;
+  max-width: 5em;
+  min-width: 1.5em;
+  overflow: hidden;
+  padding: .25em;
+  right: 0;
+  text-overflow: ellipsis;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top right;
+          transform-origin: top right; }
+
+.fa-layers-bottom-right {
+  bottom: 0;
+  right: 0;
+  top: auto;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right; }
+
+.fa-layers-bottom-left {
+  bottom: 0;
+  left: 0;
+  right: auto;
+  top: auto;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left; }
+
+.fa-layers-top-right {
+  right: 0;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top right;
+          transform-origin: top right; }
+
+.fa-layers-top-left {
+  left: 0;
+  right: auto;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top left;
+          transform-origin: top left; }
+
+.fa-lg {
+  font-size: 1.33333em;
+  line-height: 0.75em;
+  vertical-align: -.0667em; }
+
+.fa-xs {
+  font-size: .75em; }
+
+.fa-sm {
+  font-size: .875em; }
+
+.fa-1x {
+  font-size: 1em; }
+
+.fa-2x {
+  font-size: 2em; }
+
+.fa-3x {
+  font-size: 3em; }
+
+.fa-4x {
+  font-size: 4em; }
+
+.fa-5x {
+  font-size: 5em; }
+
+.fa-6x {
+  font-size: 6em; }
+
+.fa-7x {
+  font-size: 7em; }
+
+.fa-8x {
+  font-size: 8em; }
+
+.fa-9x {
+  font-size: 9em; }
+
+.fa-10x {
+  font-size: 10em; }
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em; }
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: 2.5em;
+  padding-left: 0; }
+  .fa-ul > li {
+    position: relative; }
+
+.fa-li {
+  left: -2em;
+  position: absolute;
+  text-align: center;
+  width: 2em;
+  line-height: inherit; }
+
+.fa-border {
+  border: solid 0.08em #eee;
+  border-radius: .1em;
+  padding: .2em .25em .15em; }
+
+.fa-pull-left {
+  float: left; }
+
+.fa-pull-right {
+  float: right; }
+
+.fa.fa-pull-left,
+.fas.fa-pull-left,
+.far.fa-pull-left,
+.fal.fa-pull-left,
+.fab.fa-pull-left {
+  margin-right: .3em; }
+
+.fa.fa-pull-right,
+.fas.fa-pull-right,
+.far.fa-pull-right,
+.fal.fa-pull-right,
+.fab.fa-pull-right {
+  margin-left: .3em; }
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+          animation: fa-spin 2s infinite linear; }
+
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+          animation: fa-spin 1s infinite steps(8); }
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+.fa-rotate-90 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg); }
+
+.fa-rotate-180 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg); }
+
+.fa-rotate-270 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg); }
+
+.fa-flip-horizontal {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+          transform: scale(-1, 1); }
+
+.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(1, -1);
+          transform: scale(1, -1); }
+
+.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(-1, -1);
+          transform: scale(-1, -1); }
+
+:root .fa-rotate-90,
+:root .fa-rotate-180,
+:root .fa-rotate-270,
+:root .fa-flip-horizontal,
+:root .fa-flip-vertical,
+:root .fa-flip-both {
+  -webkit-filter: none;
+          filter: none; }
+
+.fa-stack {
+  display: inline-block;
+  height: 2em;
+  position: relative;
+  width: 2.5em; }
+
+.fa-stack-1x,
+.fa-stack-2x {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+.svg-inline--fa.fa-stack-1x {
+  height: 1em;
+  width: 1.25em; }
+
+.svg-inline--fa.fa-stack-2x {
+  height: 2em;
+  width: 2.5em; }
+
+.fa-inverse {
+  color: #fff; }
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
+
+/* fontawesome end*/
+
+/* xsj patch start */
+
+.xiaoshujiang_code .code_line_break_hack{
+    margin:0;
+    border:0;
+    border-top:0;
+    border-bottom:0;
+}
+.component_attachment, .code_line_break_hack{
+  display: none;
+  visibility: collapse!important;
+  height: 0!important;
+}
+
+.blank_anchor_id {
+    float: right;
+    width: 1px
+}
+.blank_anchor_id {
+    visibility: hidden;
+}
+.blank_anchor_id:before {
+    content: 'a';
+}
+.xsj_foreignObject{
+  width: 100%!important;
+  height: 100%!important;
+}
+.xsj_foreignObject hr{
+    margin: inherit;
+}
+
+/* xsj patch end */
+
+/* emoji */
+img.emoji {
+    width: 1em;
+    line-height: 1em;
+    vertical-align: baseline;
+    margin-bottom: 0;
+}
+/* emoji */
+
+</style>
+</head><body>
+<div><div class="preview" id="wmd-preview">
+
+	<div class="preview html_preview xsj_export_html"><h1 class="story_title">DOMJudge（6.0.3）源码文件结构分析</h1><div class="story_tags"><span class="tag blue label">DOMJudge</span><span class="tag blue label">Source</span><span class="tag blue label">Analysis</span></div><p class="xsj_paragraph xsj_paragraph_level_0"></p><div class="toc"><ul><li><a href="#domjudge_1">domjudge</a><ul><li><a href="#judgehost_2">judgehost</a><ul><li><a href="#bin_3">bin/</a><ul><li><a href="#runguard_4">runguard</a></li><li><a href="#judgedaemon_5">judgedaemon</a></li><li><a href="#runpipe_6">runpipe:</a></li><li><a href="#create_cgroups_7">create_cgroups:</a></li><li><a href="#dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8">dj_run_chroot,dj_make_chroot, dj_make_ubuntu_chroot</a></li></ul></li><li><a href="#etc_9">etc/</a><ul><li><a href="#sudoersdomjudge_10">sudoers.domjudge</a></li><li><a href="#common-configphpefbc8cjudgehost-configphp_11">common-config.php，judgehost-config.php</a></li><li><a href="#judgehost-staticphp_12">judgehost-static.php</a></li><li><a href="#restapisecret_13">restapi.secret:</a></li></ul></li><li><a href="#judgings_14">judgings/</a></li><li><a href="#log_15">log/</a></li><li><a href="#run_16">run/</a></li><li><a href="#tmp_17">tmp/</a></li><li><a href="#libjudge_18">lib/judge</a><ul><li><a href="#testcase_runsh_19">testcase_run.sh</a></li><li><a href="#sh-static_20">sh-static</a></li><li><a href="#judgedaemonmainphp_21">judgedaemon.main.php</a></li><li><a href="#chroot-startstopsh_22">chroot-startstop.sh</a></li><li><a href="#check_diffsh_23">check_diff.sh</a></li><li><a href="#compilesh_24">compile.sh</a></li></ul></li></ul></li><li><a href="#domserver_25">domserver</a><ul><li><a href="#bin_26">bin</a><ul><li><a href="#balloons_27">balloons</a></li><li><a href="#dj_setup_database_28">dj_setup_database</a></li><li><a href="#multi_rejudge_29">multi_rejudge</a></li><li><a href="#simulate_contest_30">simulate_contest</a></li><li><a href="#combined_scoreboard_31">combined_scoreboard</a></li><li><a href="#eventdaemon_32">eventdaemon</a></li><li><a href="#restore_sources2db20save_sources2file_33">restore_sources2db save_sources2file</a></li><li><a href="#create_accounts_34">create_accounts</a></li><li><a href="#judging_statistics_35">judging_statistics</a></li></ul></li><li><a href="#etc_36">etc</a></li><li><a href="#lib_37">lib</a></li><li><a href="#log_38">log</a></li><li><a href="#run_39">run</a></li><li><a href="#sql_40">sql</a></li><li><a href="#submissions_41">submissions</a></li><li><a href="#tmp_42">tmp</a></li><li><a href="#webapp_43">webapp</a></li><li><a href="#www_44">www</a></li></ul></li><li><a href="#doc_45">doc/</a><ul><li><a href="#admin_46">admin/</a></li><li><a href="#examples_47">examples/</a></li><li><a href="#team_48">team/</a><ul><li><a href="#gentexconfig_49">gentexconfig</a></li></ul></li><li><a href="#judge_50">judge/</a></li><li><a href="#logos_51">logos/</a></li></ul></li></ul></li></ul></div><p></p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="domjudge_1" class="blank_anchor_name"></a><a id="domjudge_1" class="blank_anchor_id"></a><a name="domjudge" class="blank_anchor_name"></a><a id="domjudge" class="blank_anchor_id"></a>
+</div>
+<h1 class="xsj_heading_hash xsj_heading xsj_heading_h1"><span class="xsj_heading_content">domjudge</span></h1>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">DOMJudge源码文件结构如下：</p>
+</blockquote>
+<ul>
+<li>domjudge/
+<ul>
+<li>judgehost/</li>
+<li>domserver/</li>
+<li>doc/</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgehost_2" class="blank_anchor_name"></a><a id="judgehost_2" class="blank_anchor_id"></a><a name="judgehost" class="blank_anchor_name"></a><a id="judgehost" class="blank_anchor_id"></a>
+</div>
+<h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">judgehost</span></h2>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">judgehost下的文件结构：</p>
+</blockquote>
+<ul>
+<li>domjudge/
+<ul>
+<li>judgehost/
+<ul>
+<li>bin/</li>
+<li>etc/</li>
+<li>judgings/</li>
+<li>log/</li>
+<li>run/</li>
+<li>temp/</li>
+<li>lib/</li>
+</ul>
+</li>
+<li>domserver</li>
+<li>doc</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="bin_3" class="blank_anchor_name"></a><a id="bin_3" class="blank_anchor_id"></a><a name="bin" class="blank_anchor_name"></a><a id="bin" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">bin/</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="runguard_4" class="blank_anchor_name"></a><a id="runguard_4" class="blank_anchor_id"></a><a name="runguard" class="blank_anchor_name"></a><a id="runguard" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">runguard</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">负责保证用户程序的安全运行, 不会对系统进行破坏的程序, 这个的代码利用了 rlmit, cgroup timeout等方式对用户程序进行限制</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgedaemon_5" class="blank_anchor_name"></a><a id="judgedaemon_5" class="blank_anchor_id"></a><a name="judgedaemon" class="blank_anchor_name"></a><a id="judgedaemon" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judgedaemon</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">一个php脚本, 测评后端的完整进程, 包括通过服务器下载数据, 到调用相应可执行文件对代码进行编译运行比对之后. 将结果返回给webserver的整个过程都是由这个程序进行的</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="runpipe_6" class="blank_anchor_name"></a><a id="runpipe_6" class="blank_anchor_id"></a><a name="runpipe" class="blank_anchor_name"></a><a id="runpipe" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">runpipe:</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">用于在runjury(特殊的测评程序) 和 user program之间建立双向管道,进行交互式测评</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="create_cgroups_7" class="blank_anchor_name"></a><a id="create_cgroups_7" class="blank_anchor_id"></a><a name="create_cgroups" class="blank_anchor_name"></a><a id="create_cgroups" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">create_cgroups:</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">在设置了enable_cgroup 的编译参数之后, 通过这个来创建domjudge的 control group, cgroup能够获得更精确的运行时间和使用资源情况</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8" class="blank_anchor_name"></a><a id="dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8" class="blank_anchor_id"></a><a name="dj_run_chrootdj_make_chroot-dj_make_ubuntu_chroot" class="blank_anchor_name"></a><a id="dj_run_chrootdj_make_chroot-dj_make_ubuntu_chroot" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">dj_run_chroot,dj_make_chroot, dj_make_ubuntu_chroot</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">配置chroot环境，保证能够编译和运行</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="etc_9" class="blank_anchor_name"></a><a id="etc_9" class="blank_anchor_id"></a><a name="etc" class="blank_anchor_name"></a><a id="etc" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">etc/</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="sudoersdomjudge_10" class="blank_anchor_name"></a><a id="sudoersdomjudge_10" class="blank_anchor_id"></a><a name="sudoersdomjudge" class="blank_anchor_name"></a><a id="sudoersdomjudge" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">sudoers.domjudge</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">这个文件配置好了 运行测评的时候的用户的sudo权限配置</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="common-configphpefbc8cjudgehost-configphp_11" class="blank_anchor_name"></a><a id="common-configphpefbc8cjudgehost-configphp_11" class="blank_anchor_id"></a><a name="common-configphpjudgehost-configphp" class="blank_anchor_name"></a><a id="common-configphpjudgehost-configphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">common-config.php，judgehost-config.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">一些通常的config文件,和本机的配置文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgehost-staticphp_12" class="blank_anchor_name"></a><a id="judgehost-staticphp_12" class="blank_anchor_id"></a><a name="judgehost-staticphp" class="blank_anchor_name"></a><a id="judgehost-staticphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judgehost-static.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">通过make 和 make install生成的静态config文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="restapisecret_13" class="blank_anchor_name"></a><a id="restapisecret_13" class="blank_anchor_id"></a><a name="restapisecret" class="blank_anchor_name"></a><a id="restapisecret" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">restapi.secret:</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">里面存有向API请求的时候的API地址和认证信息</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgings_14" class="blank_anchor_name"></a><a id="judgings_14" class="blank_anchor_id"></a><a name="judgings" class="blank_anchor_name"></a><a id="judgings" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">judgings/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">judgings文件夹下, 所有的文件都是测评的时候生成的<br>
+每个judgings文件夹下, 有多个endpoint, 每一个endpoint对应你再 restapi.secret里面配置的不同的名字</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="log_15" class="blank_anchor_name"></a><a id="log_15" class="blank_anchor_id"></a><a name="log" class="blank_anchor_name"></a><a id="log" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">log/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">log文件夹内只存了必要的log信息, judgehost的运行日志，在控制台也有输出</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="run_16" class="blank_anchor_name"></a><a id="run_16" class="blank_anchor_id"></a><a name="run" class="blank_anchor_name"></a><a id="run" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">run/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">运行过的源文件信息</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="tmp_17" class="blank_anchor_name"></a><a id="tmp_17" class="blank_anchor_id"></a><a name="tmp" class="blank_anchor_name"></a><a id="tmp" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">tmp/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">临时存储，为空</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="libjudge_18" class="blank_anchor_name"></a><a id="libjudge_18" class="blank_anchor_id"></a><a name="libjudge" class="blank_anchor_name"></a><a id="libjudge" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">lib/judge</span></h3>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">lib/ 支持judgehost正常的运行的php文件的shell脚本，例如lib.error.php <a href="http://lib.error.sh" class="xsj_link xsj_auto_link">lib.error.sh</a></p>
+</blockquote>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="testcase_runsh_19" class="blank_anchor_name"></a><a id="testcase_runsh_19" class="blank_anchor_id"></a><a name="testcase_runsh" class="blank_anchor_name"></a><a id="testcase_runsh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">testcase_run.sh</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">用于运行程序测评的脚本, 脚本接受多个参数 会在介绍judge流程的时候具体介绍</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="sh-static_20" class="blank_anchor_name"></a><a id="sh-static_20" class="blank_anchor_id"></a><a name="sh-static" class="blank_anchor_name"></a><a id="sh-static" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">sh-static</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">一个静态的 shell</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgedaemonmainphp_21" class="blank_anchor_name"></a><a id="judgedaemonmainphp_21" class="blank_anchor_id"></a><a name="judgedaemonmainphp" class="blank_anchor_name"></a><a id="judgedaemonmainphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judgedaemon.main.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">整个测评运行的主要程序, 实际上 bin下的judgedaemon就是来调用这个程序的</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="chroot-startstopsh_22" class="blank_anchor_name"></a><a id="chroot-startstopsh_22" class="blank_anchor_id"></a><a name="chroot-startstopsh" class="blank_anchor_name"></a><a id="chroot-startstopsh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content"><a href="http://chroot-startstop.sh" class="xsj_link xsj_auto_link">chroot-startstop.sh</a></span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">处理chroot</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="check_diffsh_23" class="blank_anchor_name"></a><a id="check_diffsh_23" class="blank_anchor_id"></a><a name="check_diffsh" class="blank_anchor_name"></a><a id="check_diffsh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">check_diff.sh</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">简单的compare脚本</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="compilesh_24" class="blank_anchor_name"></a><a id="compilesh_24" class="blank_anchor_id"></a><a name="compilesh" class="blank_anchor_name"></a><a id="compilesh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content"><a href="http://compile.sh" class="xsj_link xsj_auto_link">compile.sh</a></span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">保证compile不超时, 不超资源</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="domserver_25" class="blank_anchor_name"></a><a id="domserver_25" class="blank_anchor_id"></a><a name="domserver" class="blank_anchor_name"></a><a id="domserver" class="blank_anchor_id"></a>
+</div>
+<h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">domserver</span></h2>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">domserver下的文件结构</p>
+</blockquote>
+<ul>
+<li>domserver/
+<ul>
+<li>bin/</li>
+<li>etc/</li>
+<li>lib/</li>
+<li>log/</li>
+<li>run/</li>
+<li>sql/</li>
+<li>submissions/</li>
+<li>tmp/</li>
+<li>webapp/</li>
+<li>www/</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="bin_26" class="blank_anchor_name"></a><a id="bin_26" class="blank_anchor_id"></a><a name="bin" class="blank_anchor_name"></a><a id="bin" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">bin</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="balloons_27" class="blank_anchor_name"></a><a id="balloons_27" class="blank_anchor_id"></a><a name="balloons" class="blank_anchor_name"></a><a id="balloons" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">balloons</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">Generated from '<a href="http://balloons.in" class="xsj_link xsj_auto_link">balloons.in</a>'的PHP脚本<br>
+通过气球守护进程来监控最新的正确答案并通知分发气球，这个守护进程和judgehost的守护进程不能同时使用。<br>
+&nbsp;</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="dj_setup_database_28" class="blank_anchor_name"></a><a id="dj_setup_database_28" class="blank_anchor_id"></a><a name="dj_setup_database" class="blank_anchor_name"></a><a id="dj_setup_database" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">dj_setup_database</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">建库和建表时使用的shell脚本<br>
+通常只在安装domjudge时使用</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="multi_rejudge_29" class="blank_anchor_name"></a><a id="multi_rejudge_29" class="blank_anchor_id"></a><a name="multi_rejudge" class="blank_anchor_name"></a><a id="multi_rejudge" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">multi_rejudge</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">Generated from 'multi_rejudge.in' 的PHP脚本<br>
+这个脚本是judgehost上用于统计数据。</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="simulate_contest_30" class="blank_anchor_name"></a><a id="simulate_contest_30" class="blank_anchor_id"></a><a name="simulate_contest" class="blank_anchor_name"></a><a id="simulate_contest" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">simulate_contest</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">Generated from 'simulate_contest.in' 的PHP脚本<br>
+模拟比赛的PHP脚本，可以对已举办过的比赛进行模拟</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="combined_scoreboard_31" class="blank_anchor_name"></a><a id="combined_scoreboard_31" class="blank_anchor_id"></a><a name="combined_scoreboard" class="blank_anchor_name"></a><a id="combined_scoreboard" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">combined_scoreboard</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">Generated from 'combined_scoreboard.in'的PHP脚本<br>
+它将从不同server上的积分排行榜整合成总的排行榜</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="eventdaemon_32" class="blank_anchor_name"></a><a id="eventdaemon_32" class="blank_anchor_id"></a><a name="eventdaemon" class="blank_anchor_name"></a><a id="eventdaemon" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">eventdaemon</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">&nbsp;由eventdaemon.in生成的PHP脚本<br>
+&nbsp;比赛守护程序<br>
+当比赛开始之后改守护程序能够保证比赛数据等不受更改</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="restore_sources2db20save_sources2file_33" class="blank_anchor_name"></a><a id="restore_sources2db20save_sources2file_33" class="blank_anchor_id"></a><a name="restore_sources2db-save_sources2file" class="blank_anchor_name"></a><a id="restore_sources2db-save_sources2file" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">restore_sources2db save_sources2file</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">由restore_sources2db.in,save_sources2file.in生成的PHP脚本<br>
+当数据库崩溃时，可以使用restore文件重建数据库，从domjudge的文件系统上恢复数据,而后一个文件则是将提交的数据都保存成文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="create_accounts_34" class="blank_anchor_name"></a><a id="create_accounts_34" class="blank_anchor_id"></a><a name="create_accounts" class="blank_anchor_name"></a><a id="create_accounts" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">create_accounts</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">由 create_accounts.in生成的PHP脚本<br>
+为每个用户创建相同名称的团队帐户，输入两个变量，用户名和密码</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judging_statistics_35" class="blank_anchor_name"></a><a id="judging_statistics_35" class="blank_anchor_id"></a><a name="judging_statistics" class="blank_anchor_name"></a><a id="judging_statistics" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judging_statistics</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">Generated from 'judging_statistics.in'的PHP脚本<br>
+为提交的源码的判断集生成统计数据</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="etc_36" class="blank_anchor_name"></a><a id="etc_36" class="blank_anchor_id"></a><a name="etc" class="blank_anchor_name"></a><a id="etc" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">etc</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="lib_37" class="blank_anchor_name"></a><a id="lib_37" class="blank_anchor_id"></a><a name="lib" class="blank_anchor_name"></a><a id="lib" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">lib</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="log_38" class="blank_anchor_name"></a><a id="log_38" class="blank_anchor_id"></a><a name="log" class="blank_anchor_name"></a><a id="log" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">log</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="run_39" class="blank_anchor_name"></a><a id="run_39" class="blank_anchor_id"></a><a name="run" class="blank_anchor_name"></a><a id="run" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">run</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="sql_40" class="blank_anchor_name"></a><a id="sql_40" class="blank_anchor_id"></a><a name="sql" class="blank_anchor_name"></a><a id="sql" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">sql</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="submissions_41" class="blank_anchor_name"></a><a id="submissions_41" class="blank_anchor_id"></a><a name="submissions" class="blank_anchor_name"></a><a id="submissions" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">submissions</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="tmp_42" class="blank_anchor_name"></a><a id="tmp_42" class="blank_anchor_id"></a><a name="tmp" class="blank_anchor_name"></a><a id="tmp" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">tmp</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="webapp_43" class="blank_anchor_name"></a><a id="webapp_43" class="blank_anchor_id"></a><a name="webapp" class="blank_anchor_name"></a><a id="webapp" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">webapp</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="www_44" class="blank_anchor_name"></a><a id="www_44" class="blank_anchor_id"></a><a name="www" class="blank_anchor_name"></a><a id="www" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">www</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="doc_45" class="blank_anchor_name"></a><a id="doc_45" class="blank_anchor_id"></a><a name="doc" class="blank_anchor_name"></a><a id="doc" class="blank_anchor_id"></a>
+</div>
+<h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">doc/</span></h2>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">一些简单的文档说明，比如MIT，country_codes.txt。<br>
+还有一部分是官网的文档说明<br>
+Changlog是版本变更说明<br>
+以下是doc下目录结构</p>
+</blockquote>
+<ul>
+<li>doc/
+<ul>
+<li>admin/</li>
+<li>examples/</li>
+<li>team/
+<ul>
+<li>gentexconfig</li>
+</ul>
+</li>
+<li>judge/</li>
+<li>logos/</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="admin_46" class="blank_anchor_name"></a><a id="admin_46" class="blank_anchor_id"></a><a name="admin" class="blank_anchor_name"></a><a id="admin" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">admin/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">官方admin文档的pdf版本和html版本</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="examples_47" class="blank_anchor_name"></a><a id="examples_47" class="blank_anchor_id"></a><a name="examples" class="blank_anchor_name"></a><a id="examples" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">examples/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">demo contest的问题文档和示例可通过的源码</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="team_48" class="blank_anchor_name"></a><a id="team_48" class="blank_anchor_id"></a><a name="team" class="blank_anchor_name"></a><a id="team" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">team/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">包含了官方的team手册和团队配置文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="gentexconfig_49" class="blank_anchor_name"></a><a id="gentexconfig_49" class="blank_anchor_id"></a><a name="gentexconfig" class="blank_anchor_name"></a><a id="gentexconfig" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">gentexconfig</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">这个脚本用TeX格式输出团队配置设置，可以从这个文件恢复配置设置。</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judge_50" class="blank_anchor_name"></a><a id="judge_50" class="blank_anchor_id"></a><a name="judge" class="blank_anchor_name"></a><a id="judge" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">judge/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">官方judge文档的pdf版本和html版本</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="logos_51" class="blank_anchor_name"></a><a id="logos_51" class="blank_anchor_id"></a><a name="logos" class="blank_anchor_name"></a><a id="logos" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">logos/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">logos资源文件png、需要替换图标在这里替换，并替换软连接</p>
+</div>
+
+</div></div>
+</body></html>
+

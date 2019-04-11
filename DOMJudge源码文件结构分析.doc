@@ -1,0 +1,183 @@
+Mime-Version: 1.0
+Content-Base: http://markdown.xiaoshujiang.com/
+Content-Type: Multipart/related; boundary="NEXT.ITEM-BOUNDARY";type="text/html"
+
+--NEXT.ITEM-BOUNDARY
+Content-Type: text/html; charset="utf-8"
+Content-Location: http://markdown.xiaoshujiang.com/
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+
+</style>
+</head>
+<body>
+	<div class="preview html_preview xsj_export_word"><h1 class="story_title">DOMJudge源码文件结构分析</h1><div class="story_tags"><span class="tag blue label">DOMJudge</span><span class="tag blue label">Source</span><span class="tag blue label">Analysis</span></div><div class="xiaoshujiang_element xsj_anchor">
+  <a name="domjudge_1" class="blank_anchor_name"></a><a id="domjudge_1" class="blank_anchor_id"></a><a name="domjudge" class="blank_anchor_name"></a><a id="domjudge" class="blank_anchor_id"></a>
+</div>
+<h1 class="xsj_heading_hash xsj_heading xsj_heading_h1"><span class="xsj_heading_content">domjudge</span></h1>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">DOMJudge源码文件结构如下：</p>
+</blockquote>
+<ul>
+<li>domjudge/
+<ul>
+<li>judgehost/</li>
+<li>domserver/</li>
+<li>doc/</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgehost_2" class="blank_anchor_name"></a><a id="judgehost_2" class="blank_anchor_id"></a><a name="judgehost" class="blank_anchor_name"></a><a id="judgehost" class="blank_anchor_id"></a>
+</div>
+<h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">judgehost</span></h2>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">judgehost下的文件结构：</p>
+</blockquote>
+<ul>
+<li>domjudge/
+<ul>
+<li>judgehost/
+<ul>
+<li>bin/</li>
+<li>etc/</li>
+<li>judgings/</li>
+<li>log/</li>
+<li>run/</li>
+<li>temp/</li>
+<li>lib/</li>
+</ul>
+</li>
+<li>domserver</li>
+<li>doc</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="bin_3" class="blank_anchor_name"></a><a id="bin_3" class="blank_anchor_id"></a><a name="bin" class="blank_anchor_name"></a><a id="bin" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">bin/</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="runguard_4" class="blank_anchor_name"></a><a id="runguard_4" class="blank_anchor_id"></a><a name="runguard" class="blank_anchor_name"></a><a id="runguard" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">runguard</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">负责保证用户程序的安全运行, 不会对系统进行破坏的程序, 这个的代码利用了 rlmit, cgroup timeout等方式对用户程序进行限制</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgedaemon_5" class="blank_anchor_name"></a><a id="judgedaemon_5" class="blank_anchor_id"></a><a name="judgedaemon" class="blank_anchor_name"></a><a id="judgedaemon" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judgedaemon</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">一个php脚本, 测评后端的完整进程, 包括通过服务器下载数据, 到调用相应可执行文件对代码进行编译运行比对之后. 将结果返回给webserver的整个过程都是由这个程序进行的</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="runpipe_6" class="blank_anchor_name"></a><a id="runpipe_6" class="blank_anchor_id"></a><a name="runpipe" class="blank_anchor_name"></a><a id="runpipe" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">runpipe:</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">用于在runjury(特殊的测评程序) 和 user program之间建立双向管道,进行交互式测评</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="create_cgroups_7" class="blank_anchor_name"></a><a id="create_cgroups_7" class="blank_anchor_id"></a><a name="create_cgroups" class="blank_anchor_name"></a><a id="create_cgroups" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">create_cgroups:</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">在设置了enable_cgroup 的编译参数之后, 通过这个来创建domjudge的 control group, cgroup能够获得更精确的运行时间和使用资源情况</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8" class="blank_anchor_name"></a><a id="dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8" class="blank_anchor_id"></a><a name="dj_run_chrootdj_make_chroot-dj_make_ubuntu_chroot" class="blank_anchor_name"></a><a id="dj_run_chrootdj_make_chroot-dj_make_ubuntu_chroot" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">dj_run_chroot,dj_make_chroot, dj_make_ubuntu_chroot</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">配置chroot环境，保证能够编译和运行</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="etc_9" class="blank_anchor_name"></a><a id="etc_9" class="blank_anchor_id"></a><a name="etc" class="blank_anchor_name"></a><a id="etc" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">etc/</span></h3>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="sudoersdomjudge_10" class="blank_anchor_name"></a><a id="sudoersdomjudge_10" class="blank_anchor_id"></a><a name="sudoersdomjudge" class="blank_anchor_name"></a><a id="sudoersdomjudge" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">sudoers.domjudge</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">这个文件配置好了 运行测评的时候的用户的sudo权限配置</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="common-configphpefbc8cjudgehost-configphp_11" class="blank_anchor_name"></a><a id="common-configphpefbc8cjudgehost-configphp_11" class="blank_anchor_id"></a><a name="common-configphpjudgehost-configphp" class="blank_anchor_name"></a><a id="common-configphpjudgehost-configphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">common-config.php，judgehost-config.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">一些通常的config文件,和本机的配置文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgehost-staticphp_12" class="blank_anchor_name"></a><a id="judgehost-staticphp_12" class="blank_anchor_id"></a><a name="judgehost-staticphp" class="blank_anchor_name"></a><a id="judgehost-staticphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judgehost-static.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">通过make 和 make install生成的静态config文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="restapisecret_13" class="blank_anchor_name"></a><a id="restapisecret_13" class="blank_anchor_id"></a><a name="restapisecret" class="blank_anchor_name"></a><a id="restapisecret" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">restapi.secret:</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">里面存有向API请求的时候的API地址和认证信息</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgings_14" class="blank_anchor_name"></a><a id="judgings_14" class="blank_anchor_id"></a><a name="judgings" class="blank_anchor_name"></a><a id="judgings" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">judgings/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">judgings文件夹下, 所有的文件都是测评的时候生成的<br>
+每个judgings文件夹下, 有多个endpoint, 每一个endpoint对应你再 restapi.secret里面配置的不同的名字</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="log_15" class="blank_anchor_name"></a><a id="log_15" class="blank_anchor_id"></a><a name="log" class="blank_anchor_name"></a><a id="log" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">log/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">log文件夹内只存了必要的log信息, judgehost的运行日志，在控制台也有输出</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="run_16" class="blank_anchor_name"></a><a id="run_16" class="blank_anchor_id"></a><a name="run" class="blank_anchor_name"></a><a id="run" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">run/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">运行过的源文件信息</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="tmp_17" class="blank_anchor_name"></a><a id="tmp_17" class="blank_anchor_id"></a><a name="tmp" class="blank_anchor_name"></a><a id="tmp" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">tmp/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">临时存储，为空</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="libjudge_18" class="blank_anchor_name"></a><a id="libjudge_18" class="blank_anchor_id"></a><a name="libjudge" class="blank_anchor_name"></a><a id="libjudge" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">lib/judge</span></h3>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">lib/ 支持judgehost正常的运行的php文件的shell脚本，例如lib.error.php <a href="http://lib.error.sh" class="xsj_link xsj_auto_link">lib.error.sh</a></p>
+</blockquote>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="testcase_runsh_19" class="blank_anchor_name"></a><a id="testcase_runsh_19" class="blank_anchor_id"></a><a name="testcase_runsh" class="blank_anchor_name"></a><a id="testcase_runsh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">testcase_run.sh</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">用于运行程序测评的脚本, 脚本接受多个参数 会在介绍judge流程的时候具体介绍</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="sh-static_20" class="blank_anchor_name"></a><a id="sh-static_20" class="blank_anchor_id"></a><a name="sh-static" class="blank_anchor_name"></a><a id="sh-static" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">sh-static</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">一个静态的 shell</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="judgedaemonmainphp_21" class="blank_anchor_name"></a><a id="judgedaemonmainphp_21" class="blank_anchor_id"></a><a name="judgedaemonmainphp" class="blank_anchor_name"></a><a id="judgedaemonmainphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">judgedaemon.main.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">整个测评运行的主要程序, 实际上 bin下的judgedaemon就是来调用这个程序的</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="chroot-startstopsh_22" class="blank_anchor_name"></a><a id="chroot-startstopsh_22" class="blank_anchor_id"></a><a name="chroot-startstopsh" class="blank_anchor_name"></a><a id="chroot-startstopsh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content"><a href="http://chroot-startstop.sh" class="xsj_link xsj_auto_link">chroot-startstop.sh</a></span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">处理chroot</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="check_diffsh_23" class="blank_anchor_name"></a><a id="check_diffsh_23" class="blank_anchor_id"></a><a name="check_diffsh" class="blank_anchor_name"></a><a id="check_diffsh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">check_diff.sh</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">简单的compare脚本</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="compilesh_24" class="blank_anchor_name"></a><a id="compilesh_24" class="blank_anchor_id"></a><a name="compilesh" class="blank_anchor_name"></a><a id="compilesh" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content"><a href="http://compile.sh" class="xsj_link xsj_auto_link">compile.sh</a></span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">保证compile不超时, 不超资源</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="domserver_25" class="blank_anchor_name"></a><a id="domserver_25" class="blank_anchor_id"></a><a name="domserver" class="blank_anchor_name"></a><a id="domserver" class="blank_anchor_id"></a>
+</div>
+<h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">domserver</span></h2>
+<p class="xsj_paragraph xsj_paragraph_level_0">（待续）</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="doc_26" class="blank_anchor_name"></a><a id="doc_26" class="blank_anchor_id"></a><a name="doc" class="blank_anchor_name"></a><a id="doc" class="blank_anchor_id"></a>
+</div>
+<h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">doc</span></h2>
+<p class="xsj_paragraph xsj_paragraph_level_0">（待续）</p>
+</div>
+</body></html>
+--NEXT.ITEM-BOUNDARY--
