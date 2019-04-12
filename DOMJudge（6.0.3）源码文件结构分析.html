@@ -814,7 +814,7 @@ img.emoji {
 </head><body>
 <div><div class="preview" id="wmd-preview">
 
-	<div class="preview html_preview xsj_export_html"><h1 class="story_title">DOMJudge（6.0.3）源码文件结构分析</h1><div class="story_tags"><span class="tag blue label">DOMJudge</span><span class="tag blue label">Source</span><span class="tag blue label">Analysis</span></div><p class="xsj_paragraph xsj_paragraph_level_0"></p><div class="toc"><ul><li><a href="#domjudge_1">domjudge</a><ul><li><a href="#judgehost_2">judgehost</a><ul><li><a href="#bin_3">bin/</a><ul><li><a href="#runguard_4">runguard</a></li><li><a href="#judgedaemon_5">judgedaemon</a></li><li><a href="#runpipe_6">runpipe:</a></li><li><a href="#create_cgroups_7">create_cgroups:</a></li><li><a href="#dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8">dj_run_chroot,dj_make_chroot, dj_make_ubuntu_chroot</a></li></ul></li><li><a href="#etc_9">etc/</a><ul><li><a href="#sudoersdomjudge_10">sudoers.domjudge</a></li><li><a href="#common-configphpefbc8cjudgehost-configphp_11">common-config.php，judgehost-config.php</a></li><li><a href="#judgehost-staticphp_12">judgehost-static.php</a></li><li><a href="#restapisecret_13">restapi.secret:</a></li></ul></li><li><a href="#judgings_14">judgings/</a></li><li><a href="#log_15">log/</a></li><li><a href="#run_16">run/</a></li><li><a href="#tmp_17">tmp/</a></li><li><a href="#libjudge_18">lib/judge</a><ul><li><a href="#testcase_runsh_19">testcase_run.sh</a></li><li><a href="#sh-static_20">sh-static</a></li><li><a href="#judgedaemonmainphp_21">judgedaemon.main.php</a></li><li><a href="#chroot-startstopsh_22">chroot-startstop.sh</a></li><li><a href="#check_diffsh_23">check_diff.sh</a></li><li><a href="#compilesh_24">compile.sh</a></li></ul></li></ul></li><li><a href="#domserver_25">domserver</a><ul><li><a href="#bin_26">bin</a><ul><li><a href="#balloons_27">balloons</a></li><li><a href="#dj_setup_database_28">dj_setup_database</a></li><li><a href="#multi_rejudge_29">multi_rejudge</a></li><li><a href="#simulate_contest_30">simulate_contest</a></li><li><a href="#combined_scoreboard_31">combined_scoreboard</a></li><li><a href="#eventdaemon_32">eventdaemon</a></li><li><a href="#restore_sources2db20save_sources2file_33">restore_sources2db save_sources2file</a></li><li><a href="#create_accounts_34">create_accounts</a></li><li><a href="#judging_statistics_35">judging_statistics</a></li></ul></li><li><a href="#etc_36">etc</a></li><li><a href="#lib_37">lib</a></li><li><a href="#log_38">log</a></li><li><a href="#run_39">run</a></li><li><a href="#sql_40">sql</a></li><li><a href="#submissions_41">submissions</a></li><li><a href="#tmp_42">tmp</a></li><li><a href="#webapp_43">webapp</a></li><li><a href="#www_44">www</a></li></ul></li><li><a href="#doc_45">doc/</a><ul><li><a href="#admin_46">admin/</a></li><li><a href="#examples_47">examples/</a></li><li><a href="#team_48">team/</a><ul><li><a href="#gentexconfig_49">gentexconfig</a></li></ul></li><li><a href="#judge_50">judge/</a></li><li><a href="#logos_51">logos/</a></li></ul></li></ul></li></ul></div><p></p>
+	<div class="preview html_preview xsj_export_html"><h1 class="story_title">DOMJudge（6.0.3）源码文件结构分析</h1><div class="story_tags"><span class="tag blue label">DOMJudge</span><span class="tag blue label">Source</span><span class="tag blue label">Analysis</span></div><p class="xsj_paragraph xsj_paragraph_level_0"></p><div class="toc"><ul><li><a href="#domjudge_1">domjudge</a><ul><li><a href="#judgehost_2">judgehost</a><ul><li><a href="#bin_3">bin/</a><ul><li><a href="#runguard_4">runguard</a></li><li><a href="#judgedaemon_5">judgedaemon</a></li><li><a href="#runpipe_6">runpipe:</a></li><li><a href="#create_cgroups_7">create_cgroups:</a></li><li><a href="#dj_run_chrootdj_make_chroot20dj_make_ubuntu_chroot_8">dj_run_chroot,dj_make_chroot, dj_make_ubuntu_chroot</a></li></ul></li><li><a href="#etc_9">etc/</a><ul><li><a href="#sudoersdomjudge_10">sudoers.domjudge</a></li><li><a href="#common-configphpefbc8cjudgehost-configphp_11">common-config.php，judgehost-config.php</a></li><li><a href="#judgehost-staticphp_12">judgehost-static.php</a></li><li><a href="#restapisecret_13">restapi.secret:</a></li></ul></li><li><a href="#judgings_14">judgings/</a></li><li><a href="#log_15">log/</a></li><li><a href="#run_16">run/</a></li><li><a href="#tmp_17">tmp/</a></li><li><a href="#libjudge_18">lib/judge</a><ul><li><a href="#testcase_runsh_19">testcase_run.sh</a></li><li><a href="#sh-static_20">sh-static</a></li><li><a href="#judgedaemonmainphp_21">judgedaemon.main.php</a></li><li><a href="#chroot-startstopsh_22">chroot-startstop.sh</a></li><li><a href="#check_diffsh_23">check_diff.sh</a></li><li><a href="#compilesh_24">compile.sh</a></li></ul></li></ul></li><li><a href="#domserver_25">domserver</a><ul><li><a href="#bin_26">bin/</a><ul><li><a href="#balloons_27">balloons</a></li><li><a href="#dj_setup_database_28">dj_setup_database</a></li><li><a href="#multi_rejudge_29">multi_rejudge</a></li><li><a href="#simulate_contest_30">simulate_contest</a></li><li><a href="#combined_scoreboard_31">combined_scoreboard</a></li><li><a href="#eventdaemon_32">eventdaemon</a></li><li><a href="#restore_sources2db20save_sources2file_33">restore_sources2db save_sources2file</a></li><li><a href="#create_accounts_34">create_accounts</a></li><li><a href="#judging_statistics_35">judging_statistics</a></li></ul></li><li><a href="#etc_36">etc/</a><ul><li><a href="#common-configphp_37">common-config.php</a></li><li><a href="#apacheconf20nginx-conf_38">apache.conf nginx-conf</a></li><li><a href="#domserver-configphp20domserver-staticphp_39">domserver-config.php domserver-static.php</a></li><li><a href="#dbpasswordssecret20gendbpasswords_40">dbpasswords.secret gendbpasswords</a></li><li><a href="#restapisecret20genrestapicredentials_41">restapi.secret genrestapicredentials</a></li><li><a href="#domjudge-fpmconf_42">domjudge-fpm.conf</a></li><li><a href="#import-forwardfeedyaml_43">import-forwardfeed.yaml</a></li></ul></li><li><a href="#lib_44">lib/</a><ul><li><a href="#alert_45">alert</a></li><li><a href="#libdbconfigphp202020libdatabasephp202020relationsphp20202020use_dbphp_46">lib.dbconfig.php   lib.database.php   relations.php    use_db.php</a></li><li><a href="#initphp202020202020liberrorphp2020202020libtimerphp_47">init.php      lib.error.php     lib.timer.php</a></li><li><a href="#vendor_48">vendor/</a></li><li><a href="#libimpexpphp20submit_49">lib.impexp.php submit/</a></li><li><a href="#libwrappersphp2020libmiscphp202020202020www_50">lib.wrappers.php  lib.misc.php      www/</a></li></ul></li><li><a href="#log2020run2020tmp_51">log/  run/  tmp/</a></li><li><a href="#sql_52">sql/</a></li><li><a href="#submissions_53">submissions/</a></li><li><a href="#webapp2020www_54">webapp/  www/</a></li></ul></li><li><a href="#doc_55">doc/</a><ul><li><a href="#admin_56">admin/</a></li><li><a href="#examples_57">examples/</a></li><li><a href="#team_58">team/</a><ul><li><a href="#gentexconfig_59">gentexconfig</a></li></ul></li><li><a href="#judge_60">judge/</a></li><li><a href="#logos_61">logos/</a></li></ul></li></ul></li></ul></div><p></p>
 <div class="xiaoshujiang_element xsj_anchor">
   <a name="domjudge_1" class="blank_anchor_name"></a><a id="domjudge_1" class="blank_anchor_id"></a><a name="domjudge" class="blank_anchor_name"></a><a id="domjudge" class="blank_anchor_id"></a>
 </div>
@@ -994,7 +994,7 @@ img.emoji {
 <div class="xiaoshujiang_element xsj_anchor">
   <a name="bin_26" class="blank_anchor_name"></a><a id="bin_26" class="blank_anchor_id"></a><a name="bin" class="blank_anchor_name"></a><a id="bin" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">bin</span></h3>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">bin/</span></h3>
 <div class="xiaoshujiang_element xsj_anchor">
   <a name="balloons_27" class="blank_anchor_name"></a><a id="balloons_27" class="blank_anchor_id"></a><a name="balloons" class="blank_anchor_name"></a><a id="balloons" class="blank_anchor_id"></a>
 </div>
@@ -1054,41 +1054,145 @@ img.emoji {
 <div class="xiaoshujiang_element xsj_anchor">
   <a name="etc_36" class="blank_anchor_name"></a><a id="etc_36" class="blank_anchor_id"></a><a name="etc" class="blank_anchor_name"></a><a id="etc" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">etc</span></h3>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">etc/</span></h3>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">domjudge系统的配置文件：</p>
+</blockquote>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="lib_37" class="blank_anchor_name"></a><a id="lib_37" class="blank_anchor_id"></a><a name="lib" class="blank_anchor_name"></a><a id="lib" class="blank_anchor_id"></a>
+  <a name="common-configphp_37" class="blank_anchor_name"></a><a id="common-configphp_37" class="blank_anchor_id"></a><a name="common-configphp" class="blank_anchor_name"></a><a id="common-configphp" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">lib</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">common-config.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">domjudge的总配置文件也包含了其他特殊配置文件</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="log_38" class="blank_anchor_name"></a><a id="log_38" class="blank_anchor_id"></a><a name="log" class="blank_anchor_name"></a><a id="log" class="blank_anchor_id"></a>
+  <a name="apacheconf20nginx-conf_38" class="blank_anchor_name"></a><a id="apacheconf20nginx-conf_38" class="blank_anchor_id"></a><a name="apacheconf-nginx-conf" class="blank_anchor_name"></a><a id="apacheconf-nginx-conf" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">log</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">apache.conf nginx-conf</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">apahce/nginx配置文件</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="run_39" class="blank_anchor_name"></a><a id="run_39" class="blank_anchor_id"></a><a name="run" class="blank_anchor_name"></a><a id="run" class="blank_anchor_id"></a>
+  <a name="domserver-configphp20domserver-staticphp_39" class="blank_anchor_name"></a><a id="domserver-configphp20domserver-staticphp_39" class="blank_anchor_id"></a><a name="domserver-configphp-domserver-staticphp" class="blank_anchor_name"></a><a id="domserver-configphp-domserver-staticphp" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">run</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">domserver-config.php domserver-static.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">domserver配置文件</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="sql_40" class="blank_anchor_name"></a><a id="sql_40" class="blank_anchor_id"></a><a name="sql" class="blank_anchor_name"></a><a id="sql" class="blank_anchor_id"></a>
+  <a name="dbpasswordssecret20gendbpasswords_40" class="blank_anchor_name"></a><a id="dbpasswordssecret20gendbpasswords_40" class="blank_anchor_id"></a><a name="dbpasswordssecret-gendbpasswords" class="blank_anchor_name"></a><a id="dbpasswordssecret-gendbpasswords" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">sql</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">dbpasswords.secret gendbpasswords</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">数据库密码配置文件和生成数据库密码的脚本</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="submissions_41" class="blank_anchor_name"></a><a id="submissions_41" class="blank_anchor_id"></a><a name="submissions" class="blank_anchor_name"></a><a id="submissions" class="blank_anchor_id"></a>
+  <a name="restapisecret20genrestapicredentials_41" class="blank_anchor_name"></a><a id="restapisecret20genrestapicredentials_41" class="blank_anchor_id"></a><a name="restapisecret-genrestapicredentials" class="blank_anchor_name"></a><a id="restapisecret-genrestapicredentials" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">submissions</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">restapi.secret genrestapicredentials</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">REST API密码配置文件和生成REST API的脚本</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="tmp_42" class="blank_anchor_name"></a><a id="tmp_42" class="blank_anchor_id"></a><a name="tmp" class="blank_anchor_name"></a><a id="tmp" class="blank_anchor_id"></a>
+  <a name="domjudge-fpmconf_42" class="blank_anchor_name"></a><a id="domjudge-fpmconf_42" class="blank_anchor_id"></a><a name="domjudge-fpmconf" class="blank_anchor_name"></a><a id="domjudge-fpmconf" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">tmp</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">domjudge-fpm.conf</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">domjudge php 配置文件</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="webapp_43" class="blank_anchor_name"></a><a id="webapp_43" class="blank_anchor_id"></a><a name="webapp" class="blank_anchor_name"></a><a id="webapp" class="blank_anchor_id"></a>
+  <a name="import-forwardfeedyaml_43" class="blank_anchor_name"></a><a id="import-forwardfeedyaml_43" class="blank_anchor_id"></a><a name="import-forwardfeedyaml" class="blank_anchor_name"></a><a id="import-forwardfeedyaml" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">webapp</span></h3>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">import-forwardfeed.yaml</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">第一次make domserver的时候导入的配置 包括默认网址，管理员账户密码等</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="www_44" class="blank_anchor_name"></a><a id="www_44" class="blank_anchor_id"></a><a name="www" class="blank_anchor_name"></a><a id="www" class="blank_anchor_id"></a>
+  <a name="lib_44" class="blank_anchor_name"></a><a id="lib_44" class="blank_anchor_id"></a><a name="lib" class="blank_anchor_name"></a><a id="lib" class="blank_anchor_id"></a>
 </div>
-<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">www</span></h3>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">lib/</span></h3>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">domjudge共享的库文件:</p>
+</blockquote>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="doc_45" class="blank_anchor_name"></a><a id="doc_45" class="blank_anchor_id"></a><a name="doc" class="blank_anchor_name"></a><a id="doc" class="blank_anchor_id"></a>
+  <a name="alert_45" class="blank_anchor_name"></a><a id="alert_45" class="blank_anchor_id"></a><a name="alert" class="blank_anchor_name"></a><a id="alert" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">alert</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">调用domjudge库文件时的通知消息</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="libdbconfigphp202020libdatabasephp202020relationsphp20202020use_dbphp_46" class="blank_anchor_name"></a><a id="libdbconfigphp202020libdatabasephp202020relationsphp20202020use_dbphp_46" class="blank_anchor_id"></a><a name="libdbconfigphp-libdatabasephp-relationsphp-use_dbphp" class="blank_anchor_name"></a><a id="libdbconfigphp-libdatabasephp-relationsphp-use_dbphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">lib.dbconfig.php   lib.database.php   relations.php    use_db.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">对数据库操作的库，包含数据库配置文件，数据库读写文件，数据库表名</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="initphp202020202020liberrorphp2020202020libtimerphp_47" class="blank_anchor_name"></a><a id="initphp202020202020liberrorphp2020202020libtimerphp_47" class="blank_anchor_id"></a><a name="initphp-liberrorphp-libtimerphp" class="blank_anchor_name"></a><a id="initphp-liberrorphp-libtimerphp" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">init.php      lib.error.php     lib.timer.php</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">初始化domjudge函数调用库，以及基本的函数库</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="vendor_48" class="blank_anchor_name"></a><a id="vendor_48" class="blank_anchor_id"></a><a name="vendor" class="blank_anchor_name"></a><a id="vendor" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">vendor/</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">PHP包管理工具composer生成的文件夹</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="libimpexpphp20submit_49" class="blank_anchor_name"></a><a id="libimpexpphp20submit_49" class="blank_anchor_id"></a><a name="libimpexpphp-submit" class="blank_anchor_name"></a><a id="libimpexpphp-submit" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">lib.impexp.php submit/</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">提交的源文件导入，导入文件使用的php脚本和对应的文件夹</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="libwrappersphp2020libmiscphp202020202020www_50" class="blank_anchor_name"></a><a id="libwrappersphp2020libmiscphp202020202020www_50" class="blank_anchor_id"></a><a name="libwrappersphp-libmiscphp-www" class="blank_anchor_name"></a><a id="libwrappersphp-libmiscphp-www" class="blank_anchor_id"></a>
+</div>
+<h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">lib.wrappers.php  lib.misc.php      www/</span></h4>
+<p class="xsj_paragraph xsj_paragraph_level_0">cookie以及domserver web的php文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="log2020run2020tmp_51" class="blank_anchor_name"></a><a id="log2020run2020tmp_51" class="blank_anchor_id"></a><a name="log-run-tmp" class="blank_anchor_name"></a><a id="log-run-tmp" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">log/  run/  tmp/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">日志和临时存储的文件夹</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="sql_52" class="blank_anchor_name"></a><a id="sql_52" class="blank_anchor_id"></a><a name="sql" class="blank_anchor_name"></a><a id="sql" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">sql/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">初始为demo contest 的sql 文件<br>
+当运行 restore_sources2db save_sources2file后，就是重建数据库所保存的sql文件</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="submissions_53" class="blank_anchor_name"></a><a id="submissions_53" class="blank_anchor_id"></a><a name="submissions" class="blank_anchor_name"></a><a id="submissions" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">submissions/</span></h3>
+<p class="xsj_paragraph xsj_paragraph_level_0">该文件夹下包含提交的源码文件，并重命名</p>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="webapp2020www_54" class="blank_anchor_name"></a><a id="webapp2020www_54" class="blank_anchor_id"></a><a name="webapp-www" class="blank_anchor_name"></a><a id="webapp-www" class="blank_anchor_id"></a>
+</div>
+<h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">webapp/  www/</span></h3>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">webapp存放了domjudge系统web端入口以及资源文件</p>
+</blockquote>
+<ul>
+<li>
+<ul>
+<li>webapp/
+<ul>
+<li>app</li>
+<li>bin</li>
+<li>phpunit.xml.dist</li>
+<li>src</li>
+<li>tests  demo contest</li>
+<li>var</li>
+<li>web</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p class="xsj_paragraph xsj_paragraph_level_1">www存放domjudge api jury public team 界面以及相应的PHP文件</p>
+</blockquote>
+<ul>
+<li>
+<ul>
+<li>www/
+<ul>
+<li>api</li>
+<li>auth</li>
+<li>configure.php</li>
+<li>feed</li>
+<li>index.php</li>
+<li>jury</li>
+<li>public</li>
+<li>team</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="xiaoshujiang_element xsj_anchor">
+  <a name="doc_55" class="blank_anchor_name"></a><a id="doc_55" class="blank_anchor_id"></a><a name="doc" class="blank_anchor_name"></a><a id="doc" class="blank_anchor_id"></a>
 </div>
 <h2 class="xsj_heading_hash xsj_heading xsj_heading_h2"><span class="xsj_heading_content">doc/</span></h2>
 <blockquote>
@@ -1113,32 +1217,32 @@ Changlog是版本变更说明<br>
 </li>
 </ul>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="admin_46" class="blank_anchor_name"></a><a id="admin_46" class="blank_anchor_id"></a><a name="admin" class="blank_anchor_name"></a><a id="admin" class="blank_anchor_id"></a>
+  <a name="admin_56" class="blank_anchor_name"></a><a id="admin_56" class="blank_anchor_id"></a><a name="admin" class="blank_anchor_name"></a><a id="admin" class="blank_anchor_id"></a>
 </div>
 <h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">admin/</span></h3>
 <p class="xsj_paragraph xsj_paragraph_level_0">官方admin文档的pdf版本和html版本</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="examples_47" class="blank_anchor_name"></a><a id="examples_47" class="blank_anchor_id"></a><a name="examples" class="blank_anchor_name"></a><a id="examples" class="blank_anchor_id"></a>
+  <a name="examples_57" class="blank_anchor_name"></a><a id="examples_57" class="blank_anchor_id"></a><a name="examples" class="blank_anchor_name"></a><a id="examples" class="blank_anchor_id"></a>
 </div>
 <h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">examples/</span></h3>
 <p class="xsj_paragraph xsj_paragraph_level_0">demo contest的问题文档和示例可通过的源码</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="team_48" class="blank_anchor_name"></a><a id="team_48" class="blank_anchor_id"></a><a name="team" class="blank_anchor_name"></a><a id="team" class="blank_anchor_id"></a>
+  <a name="team_58" class="blank_anchor_name"></a><a id="team_58" class="blank_anchor_id"></a><a name="team" class="blank_anchor_name"></a><a id="team" class="blank_anchor_id"></a>
 </div>
 <h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">team/</span></h3>
 <p class="xsj_paragraph xsj_paragraph_level_0">包含了官方的team手册和团队配置文件</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="gentexconfig_49" class="blank_anchor_name"></a><a id="gentexconfig_49" class="blank_anchor_id"></a><a name="gentexconfig" class="blank_anchor_name"></a><a id="gentexconfig" class="blank_anchor_id"></a>
+  <a name="gentexconfig_59" class="blank_anchor_name"></a><a id="gentexconfig_59" class="blank_anchor_id"></a><a name="gentexconfig" class="blank_anchor_name"></a><a id="gentexconfig" class="blank_anchor_id"></a>
 </div>
 <h4 class="xsj_heading_hash xsj_heading xsj_heading_h4"><span class="xsj_heading_content">gentexconfig</span></h4>
 <p class="xsj_paragraph xsj_paragraph_level_0">这个脚本用TeX格式输出团队配置设置，可以从这个文件恢复配置设置。</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="judge_50" class="blank_anchor_name"></a><a id="judge_50" class="blank_anchor_id"></a><a name="judge" class="blank_anchor_name"></a><a id="judge" class="blank_anchor_id"></a>
+  <a name="judge_60" class="blank_anchor_name"></a><a id="judge_60" class="blank_anchor_id"></a><a name="judge" class="blank_anchor_name"></a><a id="judge" class="blank_anchor_id"></a>
 </div>
 <h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">judge/</span></h3>
 <p class="xsj_paragraph xsj_paragraph_level_0">官方judge文档的pdf版本和html版本</p>
 <div class="xiaoshujiang_element xsj_anchor">
-  <a name="logos_51" class="blank_anchor_name"></a><a id="logos_51" class="blank_anchor_id"></a><a name="logos" class="blank_anchor_name"></a><a id="logos" class="blank_anchor_id"></a>
+  <a name="logos_61" class="blank_anchor_name"></a><a id="logos_61" class="blank_anchor_id"></a><a name="logos" class="blank_anchor_name"></a><a id="logos" class="blank_anchor_id"></a>
 </div>
 <h3 class="xsj_heading_hash xsj_heading xsj_heading_h3"><span class="xsj_heading_content">logos/</span></h3>
 <p class="xsj_paragraph xsj_paragraph_level_0">logos资源文件png、需要替换图标在这里替换，并替换软连接</p>
